@@ -13,3 +13,16 @@
  * 相关模式：
  *     -- 很多模式可以用单例实现，如抽象工厂，建造者，和原型
  */
+
+class Singleton {
+    private static instance: Singleton;
+
+    private constructor() {}
+
+    static getInstance(): Singleton {
+        if (Singleton.instance === null) {
+            Singleton.instance = new Singleton();
+        }
+        return Singleton.instance;
+    }
+}

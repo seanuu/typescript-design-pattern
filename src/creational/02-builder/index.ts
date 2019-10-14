@@ -15,18 +15,72 @@
  *     -- 可对构造过程进行更精细的控制
  * 相关模式：
  *     -- 抽象工厂与建造者模式相似，因为它也可以创建复杂对象
- *        主要的区别是建造者模式着重于一步步构造一个复杂对象
+ *        主要的区别是建造者模式着重于一步步构造一个复杂对象，完成后才从建造者中取出产品
  *     -- 组合模式通常是用建造者模式生成的
  */
 
-abstract class Builder {
-    abstract buildPartA(): void;
+class Builder {
+    buildPartA(arg: string): void {
+    };
 
-    abstract buildPartB(): void;
+    buildPartB(arg: string): void {
+    };
 
-    abstract buildPartC(): void;
+    buildPartC(arg: string): void {
+    };
+
+    getResult(): Product {
+        return new Product();
+    };
 }
 
 class Product {
+    public partA: string;
+    public partB: string;
+    public partC: string;
 
+    constructor() {
+        this.partA = '';
+        this.partB = '';
+        this.partC = '';
+    }
 }
+
+class ConcreteBuilder extends Builder {
+    private product: Product;
+
+    constructor() {
+        super();
+        this.product = new Product();
+    }
+
+    buildPartA(arg: string): void {
+        this.product.partA = arg;
+    }
+
+    buildPartB(arg: string): void {
+        this.product.partB = arg;
+    }
+
+    buildPartC(arg: string): void {
+        this.product.partC = arg;
+    }
+
+    getResult(): Product {
+        return this.product;
+    }
+}
+
+/**
+ * use example
+ */
+function createProduct(builder: Builder) {
+    builder.buildPartA('arg1');
+    builder.buildPartB('arg2');
+    builder.buildPartC('arg3');
+
+    return builder.getResult();
+}
+
+const productBuilder = new ConcreteBuilder();
+const product = createProduct(productBuilder);

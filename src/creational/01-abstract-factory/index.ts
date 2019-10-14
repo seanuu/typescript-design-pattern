@@ -77,17 +77,21 @@ class ConcreteFactory2 extends AbstractFactory {
     }
 }
 
-class Tester {
-    private productA: AbstractProductA;
-    private productB: AbstractProductB;
-
-    constructor(factory: AbstractFactory) {
-        this.productA = factory.createProductA();
-        this.productB = factory.createProductB();
-    }
-
-    test() {
-        console.log(this.productA.methodA());
-        console.log(this.productB.methodB());
-    }
+/**
+ * use example
+ */
+function createProductA(factory: ConcreteFactory1) {
+    return factory.createProductA();
 }
+
+function createProductB(factory: ConcreteFactory2) {
+    return factory.createProductA();
+}
+
+const factory1 = new ConcreteFactory1();
+const product1A = createProductA(factory1);
+const product1B = createProductB(factory1);
+
+const factory2 = new ConcreteFactory2();
+const product2A = createProductA(factory2);
+const product2B = createProductB(factory2);
